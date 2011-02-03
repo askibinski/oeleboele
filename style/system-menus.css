@@ -1,0 +1,15 @@
+/* $Id: system-menus.css,v 1.1.2.2.2.1 2010/02/17 14:04:11 mverbaar Exp $ */
+
+ul.menu,
+ul.links,
+ul.tabs {
+  list-style: none;
+}
+ul.inline,
+ul.links li,
+ul.tabs li {
+  display: inline;
+}
+li a.active {
+  color: #000;
+}

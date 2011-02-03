@@ -1,0 +1,96 @@
+/* $Id: reset.css,v 1.1.2.2.2.7 2010/02/26 15:47:24 mverbaar Exp $ */
+
+/**
+ * Remove browser inconsistencies from most elements.
+ */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+
+/**
+ * Base font styles
+ *
+ * Specifically targets form controls which browsers often times give
+ * special treatment.
+ */
+body, input, select, textarea {
+  font: 13px/1.5 Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+
+/**
+ * Apply default margins to elements that most likely need it.
+ */
+p, blockquote, pre, dl, ol, ul, fieldset, .form-item, table {
+  margin-bottom: 1.5em;
+}
+ol ol,
+ul ul,
+ol ul,
+ul ol,
+ul.menu,
+div.messages ul,
+.form-checkboxes .form-item,
+.form-radios .form-item,
+td .form-item {
+  margin-bottom: 0;
+}
+
+/**
+ * Quotes
+ */
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+/**
+ * Links
+ */
+a {
+  color: #00f;
+}
+
+/**
+ * Forms
+ */
+.form-item label {
+  display: block;
+  font-weight: bold;
+}
+.form-item label.option {
+  display: inline;
+  font-weight: normal;
+}
+.marker, .form-required {
+  color: #f00;
+}
+
+/**
+ * Tables
+ */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+}

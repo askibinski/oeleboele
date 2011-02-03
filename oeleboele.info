@@ -1,0 +1,18 @@
+name = Oeleboele
+description = ezMerge starter theme
+core = 6.x
+version = VERSION
+engine = phptemplate
+
+stylesheets[all][] = style/reset.css
+stylesheets[all][] = style/defaults.css
+stylesheets[all][] = style/system.css
+stylesheets[all][] = style/system-menus.css
+stylesheets[all][] = style/layout.css
+
+regions[header_top] = Header
+regions[left] = Left
+regions[content_top] = Content top
+regions[content_bottom] = Content bottom
+regions[right] = Right
+regions[footer] = Footer
