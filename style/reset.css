@@ -1,96 +1,143 @@
-/* $Id: reset.css,v 1.1.2.2.2.7 2010/02/26 15:47:24 mverbaar Exp $ */
 
-/**
- * Remove browser inconsistencies from most elements.
- */
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, font, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  vertical-align: baseline;
-  background: transparent;
-}
+/** reset **/
 
-/**
- * Base font styles
- *
- * Specifically targets form controls which browsers often times give
- * special treatment.
- */
-body, input, select, textarea {
-  font: 13px/1.5 Helvetica Neue, Helvetica, Arial, sans-serif;
-}
+* { margin:0; padding:0; }
+.clearfix:after { content:"."; display:block; clear:both; visibility:hidden; line-height:0; height:0; }
+.clearfix { display:inline-block; }
+html[xmlns] .clearfix { display:block; }
+* html .clearfix { height:1%; }
+.clear { clear:both; }
 
-/**
- * Apply default margins to elements that most likely need it.
- */
-p, blockquote, pre, dl, ol, ul, fieldset, .form-item, table {
-  margin-bottom: 1.5em;
+html { overflow-y:scroll; overflow:-moz-scrollbars-vertical; height:100%; }
+body { font-family:Arial; font-size:12px; min-height:100%; }
+a img { border:0; }
+
+
+/** blocks **/
+
+body.page-admin .draggable a.tabledrag-handle {
+	cursor: move;
+	float: left;
+	height: 1.7em;
+	margin: -0.4em 0px -0.4em -0.5em;
+	padding: 0.42em 1.5em 0.42em 0.5em;
+	text-decoration: none;
 }
-ol ol,
-ul ul,
-ol ul,
-ul ol,
-ul.menu,
-div.messages ul,
-.form-checkboxes .form-item,
-.form-radios .form-item,
-td .form-item {
-  margin-bottom: 0;
+body.page-admin a.tabledrag-handle .handle {
+	background: url(/misc/draggable.png) no-repeat 0px 0px;
+	height: 13px;
+	margin-top: 4px;
+	width: 13px;
+}
+body.page-admin a.tabledrag-handle-hover .handle {
+	background-position: 0 -20px;
+}
+body.page-admin tr.drag-previous {
+	background-color: #eee;
+}
+body.page-admin tr.drag {
+	background-color: #ddd;
 }
 
-/**
- * Quotes
- */
-blockquote, q {
-  quotes: none;
+
+/** forms **/
+
+fieldset {
+	padding:10px;
 }
-blockquote:before, blockquote:after,
-q:before, q:after {
-  content: '';
-  content: none;
+fieldset.collapsed {
+	padding: 10px 0px 0px 10px;
+}
+fieldset.collapsed > .fieldset-wrapper {
+	display:none;
+}
+.form-item {
+	margin: 15px 0 0;
+}
+table .form-item {
+	margin: 0;
+}
+.form-item > label {
+	display: block;
+}
+fieldset > legend + .form-item,
+fieldset > .fieldset-wrapper > .form-item:first-child {
+	margin-top:0;
+}
+.form-item .description {
+	color: #888;
+	font-size: 11px;
+}
+input[type=submit] {
+	margin:10px 10px 0 0;
 }
 
-/**
- * Links
- */
-a {
-  color: #00f;
+
+/** messages **/
+
+#messages {
+	padding: 0.5em;
+}
+#messages > div.messages {
+	padding: 9px 9px 9px 9px;
+	color: #036;
+	background: #bdf;
+	border: 1px solid #ace;
+}
+#messages > div > ul > li {
+	list-style: none;
+}
+#messages > div.warning {
+	color: #840;
+	background: #fe6;
+	border-color: #ed5;
+}
+#messages > div.error {
+	color: #fff;
+	background: #e63;
+	border-color: #d52;
+}
+#messages > div.error p.error {
+	color: #333;
+}
+#messages > div.status {
+	color: #360;
+	background: #cf8;
+	border-color: #be7;
 }
 
-/**
- * Forms
- */
-.form-item label {
-  display: block;
-  font-weight: bold;
-}
-.form-item label.option {
-  display: inline;
-  font-weight: normal;
-}
-.marker, .form-required {
-  color: #f00;
-}
 
-/**
- * Tables
- */
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-  width: 100%;
+/** tabs **/
+
+#tabs {
+	z-index: 4;
+	padding-bottom:10px;
 }
-th, td {
-  text-align: left;
-  vertical-align: top;
+#tabs > ul.secondary {
+	margin:5px 0 0 15px;
+}
+#tabs li {
+	list-style: none;
+	display: inline-block;
+}
+.ie #tabs li {
+	display: inline;
+	margin-right: 10px;
+}
+#tabs li a {
+	display: inline-block;
+	background: #000;
+	color: #fff;
+	padding: 2px 6px 3px;
+	text-decoration: none;
+	border-radius: 0 0 4px 4px;
+	-moz-border-radius: 0 0 4px 4px;
+	-o-border-radius: 0 0 4px 4px;
+}
+.ie #tabs li a {
+	display: inline;
+}
+#tabs li a:hover {
+	color: #bbb;
+	background-color:#444;
 }
