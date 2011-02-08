@@ -5,12 +5,16 @@ version = VERSION
 engine = phptemplate
 
 stylesheets[all][] = style/reset.css
-stylesheets[all][] = style/defaults.css
-stylesheets[all][] = style/system.css
-stylesheets[all][] = style/system-menus.css
+stylesheets[all][] = xxxx/defaults.css
+stylesheets[all][] = xxxx/system.css
+stylesheets[all][] = xxxx/system-menus.css
 stylesheets[all][] = style/layout.css
+stylesheets[all][] = style/style.css
 
-regions[header_top] = Header
+scripts[] = js/javascripts.js
+
+regions[header] = Header
+regions[navigation] = Navigation
 regions[left] = Left
 regions[content_top] = Content top
 regions[content_bottom] = Content bottom

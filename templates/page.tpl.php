@@ -75,59 +75,93 @@
  * @see template_preprocess_page()
  */
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php print $language->language ?>" lang="<?php print $language->language ?>" dir="<?php print $language->dir ?>">
+<!DOCTYPE html>
+<html class="html animate" lang="nl">
 
 <head>
-  <?php print $head; ?>
-  <title><?php print $head_title; ?></title>
-  <?php print $styles; ?>
-  <?php print $scripts; ?>
+	<?php print $styles; ?>
+	<?php print $head; ?>
+	<title><?php print strip_tags(htmlspecialchars_decode($head_title)); ?></title>
+	<?php print $scripts; ?>
 </head>
-<body class="<?php print $body_classes; ?>">
 
-	<?php 
-	// defualt search box, can be themed extensively
-	if (!empty($search_box)): ?>
-	  <div id="search-box"><?php print $search_box; ?></div>
-	<?php endif; ?>
-	
-	<?php 
-	// a region, see corresonding naming conventions in the .info file
-	if (!empty($header_top)): ?>
-	  <div id="header-top">
-	    <?php print $header_top; ?>
-	  </div>
-	<?php endif; ?>
-	
-	<?php
-	// another example
-	if (!empty($header_top_right)): ?>
-	  <div id="header-top-right">
-	    <?php print $header_top_right; ?>
-	  </div>
-	<?php endif; ?>
-	
-	<?php 
-	// while nodes have their own titles, this tag is used for titles provided by modules and views
-	if (!empty($title)): ?><h1 class="title" id="page-title"><?php print $title; ?></h1><?php endif; ?>
-	
-	<?php 
-	// these are often only visible to administrators but necessary
-	if (!empty($tabs)): ?><div class="tabs"><?php print $tabs; ?></div><?php endif; ?>
-	
-	<?php 
-	// error messages, warnings etc, these are already default styled
-	if (!empty($messages)): print $messages; endif; ?>
-	    
-	<?php
-	// the main content of the page, this can be a node but also a view for example
-	print $content; ?>
-	
-	<?php 
-	// dont'remove this! it's needed for modules who include js at the end of the page
-	print $closure; ?>
+<body class="<?php print implode(' ', $classes_array); ?>">
+<!--[if lt IE 7 ]> <div class="ie ie6"> <![endif]-->
+<!--[if IE 7 ]>    <div class="ie ie7"> <![endif]-->
+<!--[if IE 8 ]>    <div class="ie ie8"> <![endif]-->
+<!--[if gte IE 9 ]><div class="ie ie9"> <![endif]-->
 
+	<div id="wrapper">
+
+		<div class="region-header">
+			<?php print $header; ?>
+		</div>
+
+		<div class="region-navigation">
+			<div id="logo"><a title="<?=t('Go to frontpage')?>" href="<?=url('<front>')?>"><?=t('Go to frontpage')?></a></div>
+			<?php print $navigation; ?>
+		</div>
+
+		<?php if (!empty($messages)): ?>
+			<div id="messages"><?php print $messages; ?></div>
+		<?php endif; ?>
+
+		<?php if (!empty($tabs)): ?>
+			<div id="tabs"><?php print $tabs; ?></div>
+		<?php endif; ?>
+
+		<div id="page">
+
+			<?php if (!empty($left)): ?>
+				<div class="region-left"><div>
+					<?php print $left; ?>
+				</div></div>
+			<?php endif; ?>
+
+			<div class="semi-region-content">
+
+				<?php if (!empty($content_top)): $content = ''; ?>
+					<div class="region-content_top"><div>
+						<?php print $content_top; ?>
+						<div class="clear"></div>
+					</div></div>
+				<?php endif; ?>
+
+				<?php if (!empty($content)): ?>
+					<div class="region-content"><div>
+						<?php print $content; ?>
+						<div class="clear"></div>
+					</div></div>
+				<?php endif; ?>
+
+				<?php if (!empty($content_bottom)): ?>
+					<div class="region-content_bottom"><div>
+						<?php print $content_bottom; ?>
+						<div class="clear"></div>
+					</div></div>
+				<?php endif; ?>
+
+			</div><!-- .semi-region-content -->
+
+			<?php if (!empty($right)): ?>
+				<div class="region-right"><div>
+					<?php print $right; ?>
+				</div></div>
+			<?php endif; ?>
+
+		</div><!-- #page -->
+
+		<?php if (!empty($footer)): ?>
+		  <div class="region-footer">
+			<?php print $footer; ?>
+		  </div>
+		<?php endif; ?>
+
+	</div><!-- #wrapper -->
+
+<?php print $closure; ?>
+
+<!--[if IE]></div><![endif]-->
 </body>
+
 </html>

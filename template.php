@@ -13,71 +13,81 @@ drupal_rebuild_theme_registry(); // remember to turn this off on production webs
  * Override variables before any other preprocess function, taken from zen
  */
 function phptemplate_preprocess(&$vars, $hook) {
-  // deze redirect functie wordt vooral gebruikt om bepaalde i18n redirects in te stellen
-  // zie ook deze wiki pagina: http://atrium.merge.nl/merge/node/883
-  if (arg(0)=='node' && is_numeric(arg(1))) {
-    merge_redirect(arg(1));
-  }
+
+	// Create classes ARRAY instead of string
+	$key = ($hook == 'page' || $hook == 'maintenance_page') ? 'body_classes' : 'classes';
+	if ( array_key_exists($key, $vars) ) {
+		if ( is_string($vars[$key]) ) {
+			$classes = $vars[$key];
+			$classes = strtr($classes, array('logged-in' => '', 'no-sidebars' => ''));
+			$vars['classes_array'] = array_filter(explode(' ', $classes));
+			unset($vars[$key]);
+		}
+	}
+	else {
+		$vars['classes_array'] = array($hook);
+	}
+
+	// deze redirect functie wordt vooral gebruikt om bepaalde i18n redirects in te stellen
+	// zie ook deze wiki pagina: http://atrium.merge.nl/merge/node/883
+	/*if ( arg(0) == 'node' && is_numeric(arg(1)) ) {
+		merge_redirect((int)arg(1));
+	}*/
 }
 
 function merge_redirect($nid) {
-  global $base_url;
-  $parts = parse_url($base_url);
-  switch ($nid) {
-   case 99999: // example
-   drupal_goto('http://'.$parts['host'].'/nl', $query = NULL, $fragment = NULL, $http_response_code = 301);
-   break;
-  }
+	switch ($nid) {
+		case 99999: // example
+			drupal_goto('/nl');
+	}
 }
 
 /**
  * Override or insert variables into the page template.
  */
 function phptemplate_preprocess_page(&$vars) {
-	// you can do a lot of things here, on a page.tpl.php level
-	// see examples: http://thedrupalblog.com/category/tags/preprocess-page
-	
-	// **voorbeeld**
-	// onderstaande code voegt de naam van de view toe welke via de 
-	// module 'viewfield' (http://drupal.org/project/viewfield)
-	// in een node is ge-embed, aangenomen dat het CCK veld 'view' heet (field_view)
-	
-	// de 'vname' bestaat uit 2 delen gescheiden door een pipe (|),
-	// het eerste deel is de view name,
-	// het tweede deel de display name van de gebruikte view.
-	if (is_array($vars[node]->field_view)) {
-		$arr = explode("|",$vars[node]->field_view[0][vname]);
-		if (is_array($arr)) {
-			$vars['body_classes'] .= " ".$arr[0];
+
+	// A handy boolean
+	$vars['is_node'] = arg(0) == 'node' && is_numeric(arg(1));
+
+	// Context classes (more for debugging than anything else)
+	if ( function_exists('context_active_contexts') ) {
+		$contexts = context_active_contexts();
+		foreach ( $contexts AS $c_id => $c ) {
+			$vars['classes_array'][] = 'context-' . $c_id;
 		}
 	}
-	if (stripos($vars['head_title'],'icon_users.png')) {
-    $vars['head_title'] = 'User account | ' . variable_get('site_name', '');
-  }
-  if (stripos($vars['title'],'icon_users.png')) {
-    $vars['title'] = 'User account';
-  }
-  
-	if (arg(1)=='add' || arg(2)=='edit') {
-		$vars['body_classes'] .= " node-add-edit";
-	} 
-	if (arg(0)=='user' || arg(2)=='profile') {
-		$vars['body_classes'] .= " account-edit";
-	} 
-	if (arg(0)=='user' || arg(2)=='edit') {
-		$vars['body_classes'] .= " profile-edit";
+
+	// 'Side bar' styles
+	// Change the regions to whatever you need to know the difference in
+	// Don't add ALL regions; that's just a waste of classes
+	foreach ( array('left', 'right') AS $region ) {
+		$vars['classes_array'][] = 'with' . ( empty($vars[$region]) ? 'out' : '' ) . '-' . $region;
 	}
-  
-  if (arg(0) == 'node' && is_numeric(arg(1))) {
-	  $vars['is_node'] = TRUE;
-    $vars['classes_array'][] = 'nid-'.arg(1);
-    if (arg(2)=='done') {
-      $vars['classes_array'][] = 'webform-submitted';
-    }
-  } else {
-    $vars['is_node'] = FALSE;
-  }
-  
+
+	// Always do this
+	if ( stripos($vars['head_title'], 'icon_users.png') ) {
+		$vars['head_title'] = 'User account | ' . variable_get('site_name', '');
+	}
+	// and this
+	if ( stripos($vars['title'], 'icon_users.png') ) {
+		$vars['title'] = 'User account';
+	}
+
+	// Add more handy classes
+	if ( arg(1) == 'add' || arg(2) == 'edit' ) {
+		$vars['classes_array'][] = 'node-add-edit';
+	}
+	if ( arg(0) == 'user' || arg(2) == 'profile' ) {
+		$vars['classes_array'][] = 'account-edit';
+	}
+	if ( arg(0) == 'user' || arg(2) == 'edit' ) {
+		$vars['classes_array'][] = 'profile-edit';
+	}
+	if ( $vars['is_node'] && arg(2) == 'done' ) {
+		$vars['classes_array'][] = 'webform-submitted';
+	}
+
 }
 
 /**
