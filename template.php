@@ -10,6 +10,26 @@
 drupal_rebuild_theme_registry(); // remember to turn this off on production websites!
 
 /**
+ * Allow theming for:
+ *  - user login form (page)
+ */
+function oeleboele_theme() {
+  return array(
+    'user_login' => array(
+      'arguments' => array('form' => null),
+    ),
+  );
+}
+
+/**
+ * Theme user login form (page)
+ */
+function oeleboele_user_login( $form ) {
+  $form['name']['#attributes']['autofocus'] = '';
+  return drupal_render($form);
+}
+
+/**
  * Override variables before any other preprocess function, taken from zen
  */
 function phptemplate_preprocess(&$vars, $hook) {
