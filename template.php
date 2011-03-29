@@ -9,6 +9,7 @@
 
 drupal_rebuild_theme_registry(); // remember to turn this off on production websites!
 
+
 /**
  * Allow theming for:
  *  - user login form (page)
@@ -21,6 +22,7 @@ function oeleboele_theme() {
   );
 }
 
+
 /**
  * Theme user login form (page)
  */
@@ -28,6 +30,7 @@ function oeleboele_user_login( $form ) {
   $form['name']['#attributes']['autofocus'] = '';
   return drupal_render($form);
 }
+
 
 /**
  * Override variables before any other preprocess function, taken from zen
@@ -55,12 +58,14 @@ function phptemplate_preprocess(&$vars, $hook) {
 	}*/
 }
 
+
 function merge_redirect($nid) {
 	switch ($nid) {
 		case 99999: // example
 			drupal_goto('/nl');
 	}
 }
+
 
 /**
  * Override or insert variables into the page template.
@@ -108,7 +113,25 @@ function phptemplate_preprocess_page(&$vars) {
 		$vars['classes_array'][] = 'webform-submitted';
 	}
 
+  merge_removetab('Weergeven', $vars);
+  merge_removetab('View', $vars);
+  merge_removetab('Track', $vars);
+  merge_removetab('Opvolgen', $vars);
+
 }
+
+// Remove undesired local task tabs.
+// Related to yourthemename_removetab() in yourthemename_preprocess_page().
+function merge_removetab($label, &$vars) {
+  $tabs = explode("\n", $vars['tabs']);
+  $vars['tabs'] = '';
+  foreach ($tabs as $tab) {
+    if (strpos($tab, '>' . $label . '<') === FALSE) {
+      $vars['tabs'] .= $tab . "\n";
+    }
+  }
+}
+
 
 /**
  * Override or insert variables into the node template.
@@ -117,6 +140,7 @@ function phptemplate_preprocess_node(&$vars) {
 	// you can do various stuff here to alter variables which are avaialable in node.tpl.php
 	// see for an example: http://11heavens.com/putting-some-order-in-your-terms
 }
+
 
 /**
  * Format a username.
@@ -158,22 +182,6 @@ function phptemplate_username($object) {
   return $output;
 }
 
-  phptemplate_removetab('Weergeven', $vars);
-  phptemplate_removetab('View', $vars);
-  phptemplate_removetab('Track', $vars);
-  phptemplate_removetab('Opvolgen', $vars);
-
-// Remove undesired local task tabs.
-// Related to yourthemename_removetab() in yourthemename_preprocess_page().
-function phptemplate_removetab($label, &$vars) {
-  $tabs = explode("\n", $vars['tabs']);
-  $vars['tabs'] = '';
-  foreach ($tabs as $tab) {
-    if (strpos($tab, '>' . $label . '<') === FALSE) {
-      $vars['tabs'] .= $tab . "\n";
-    }
-  }
-}
 
 /* other usefull overrides:
 
