@@ -4,7 +4,39 @@
  *	
  */
 
-html {  }
-body { background:none white; }
+html {
+	
+}
+body {
+	font-family: Arial;
+}
+ul, ol, p, table {
+	margin: 10px 0;
+}
+a {
+	
+}
+a:hover,
+a:focus {
+	
+}
+
+
+
+
+
+/* clearfixes separately and NOT in the reset, because Drupal doesn't listen to user submitted CSS classes */
+.clearfix:after,
+.region:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	height: 0;
+}
+.clearfix,
+.region {
+	*display: inline-block;
+}
 
 

@@ -2,15 +2,11 @@
 /** reset **/
 
 * { margin:0; padding:0; }
-.clearfix:after { content:"."; display:block; clear:both; visibility:hidden; line-height:0; height:0; }
-.clearfix { display:inline-block; }
-html[xmlns] .clearfix { display:block; }
-* html .clearfix { height:1%; }
 .clear { clear:both; }
 
-html { overflow-y:scroll; overflow:-moz-scrollbars-vertical; height:100%; }
-body { font-family:Arial; font-size:12px; min-height:100%; }
-a img { border:0; }
+html { overflow-y: scroll; height: 100%; }
+body { min-height: 100%; }
+a img { border: 0; }
 
 
 /** blocks **/
